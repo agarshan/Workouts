@@ -1,9 +1,12 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useLocalSearchParams, Stack } from "expo-router";
 import excercises from "./../../assets/data/exercises.json";
+import { useState } from "react";
 
 export default function ExcerciseDetailsScreen() {
   const params = useLocalSearchParams();
+  const [isInstructionsExpanded, setIsInstructionsExpanded] = useState(false);
+
   const excercise = excercises.find((item) => item.name === params.name);
   if (!excercise) {
     <Text>Item not found</Text>;
@@ -19,7 +22,18 @@ export default function ExcerciseDetailsScreen() {
         </Text>
       </View>
       <View style={styles.panel}>
-        <Text style={styles.instructions}>{excercise.instructions}</Text>
+        <Text
+          numberOfLines={isInstructionsExpanded ? "0" : "3"}
+          style={styles.instructions}
+        >
+          {excercise.instructions}
+        </Text>
+        <Text
+          style={styles.seeMore}
+          onPress={() => setIsInstructionsExpanded(!isInstructionsExpanded)}
+        >
+          {isInstructionsExpanded ? "See less" : "See more"}
+        </Text>
       </View>
     </ScrollView>
   );
@@ -43,5 +57,11 @@ const styles = StyleSheet.create({
   instructions: {
     fontSize: 16,
     lineHeight: 25,
+  },
+  seeMore: {
+    fontWeight: "700",
+    alignSelf: "center",
+    color: "gray",
+    padding: 10,
   },
 });
