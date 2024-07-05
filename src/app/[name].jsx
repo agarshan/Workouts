@@ -11,6 +11,7 @@ import { useState } from "react";
 import { gql } from "graphql-request";
 import client from "../graphqlClient";
 import { useQuery } from "@tanstack/react-query";
+import NewSetInput from "../components/NewSetInput";
 
 const exerciseQuery = gql`
   query exercises($muscle: String, $name: String) {
@@ -67,6 +68,7 @@ export default function ExcerciseDetailsScreen() {
           {isInstructionsExpanded ? "See less" : "See more"}
         </Text>
       </View>
+      <NewSetInput />
     </ScrollView>
   );
 }
